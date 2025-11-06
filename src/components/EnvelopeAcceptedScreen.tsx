@@ -27,7 +27,7 @@ export function EnvelopeAcceptedScreen({ onClick }: EnvelopeAcceptedScreenProps)
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
-                    <p>przyjenta</p>
+                    <p>przyjęta</p>
                   </div>
                 </div>
               </div>

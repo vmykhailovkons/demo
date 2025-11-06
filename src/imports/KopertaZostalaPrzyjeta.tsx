@@ -33,7 +33,7 @@ function SuccessIcon() {
 function Paragraph1() {
   return (
     <div className="absolute h-[24px] left-[93.63px] top-[12.5px] w-[136.938px]" data-name="Paragraph1">
-      <p className="absolute font-['Arial:Regular',sans-serif] leading-[24px] left-[68.5px] not-italic text-[#314158] text-[16px] text-center text-nowrap top-0 translate-x-[-50%] whitespace-pre">Koperta została przyjenta</p>
+      <p className="absolute font-['Arial:Regular',sans-serif] leading-[24px] left-[68.5px] not-italic text-[#314158] text-[16px] text-center text-nowrap top-0 translate-x-[-50%] whitespace-pre">Koperta została przyjęta</p>
     </div>
   );
 }
