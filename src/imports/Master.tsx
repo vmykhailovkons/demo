@@ -41,23 +41,16 @@ function ConfigIcon() {
   );
 }
 
-function Paragraph() {
-  return (
-    <div className="absolute h-[37.813px] left-[98.64px] top-[101.92px] w-[260.719px]" data-name="Paragraph">
-      <p className="absolute font-['Arial:Regular',sans-serif] leading-[37.814px] left-[130px] not-italic text-[24.309px] text-center text-nowrap text-white top-0 translate-x-[-50%] whitespace-pre">Konfiguracja urządzenia</p>
-    </div>
-  );
-}
-
 function Button({ onClick }: { onClick?: () => void }) {
   return (
     <button 
       onClick={onClick}
-      className="[grid-area:1_/_1] bg-[#155dfc] relative rounded-[10px] shrink-0 cursor-pointer hover:bg-[#1250e0] transition-colors" 
+      className="absolute bg-[#155dfc] left-[23px] top-[21px] w-[307px] h-[155px] rounded-[10px] cursor-pointer hover:bg-[#1250e0] transition-colors" 
       data-name="Button"
     >
-      <ConfigIcon />
-      <Paragraph />
+      <div className="absolute flex flex-col font-['Arial:Bold',sans-serif] justify-center leading-[0] left-1/2 not-italic text-[32px] text-center text-white top-1/2 translate-x-[-50%] translate-y-[-50%] w-[263px]">
+        <p className="leading-[49px]">Konfiguracja urządzenia</p>
+      </div>
     </button>
   );
 }
@@ -87,25 +80,16 @@ function Container1() {
   );
 }
 
-function Paragraph1() {
-  return (
-    <div className="h-[37.813px] relative shrink-0 w-[298.484px]" data-name="Paragraph">
-      <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[37.813px] relative w-[298.484px]">
-        <p className="absolute font-['Arial:Regular',sans-serif] leading-[37.814px] left-[149.5px] not-italic text-[24.309px] text-center text-nowrap text-white top-0 translate-x-[-50%] whitespace-pre">Zarządzanie użytkownikami</p>
-      </div>
-    </div>
-  );
-}
-
 function Button1({ onClick }: { onClick?: () => void }) {
   return (
     <button
       onClick={onClick}
-      className="[grid-area:1_/_2] bg-[#155dfc] content-stretch flex flex-col gap-[16px] items-center justify-center relative rounded-[10px] shrink-0 cursor-pointer hover:bg-[#1249d6] transition-colors"
+      className="absolute bg-[#155dfc] left-[344px] top-[21px] w-[307px] h-[155px] rounded-[10px] cursor-pointer hover:bg-[#1249d6] transition-colors"
       data-name="Button"
     >
-      <Container1 />
-      <Paragraph1 />
+      <div className="absolute flex flex-col font-['Arial:Bold',sans-serif] justify-center leading-[0] left-1/2 not-italic text-[32px] text-center text-white top-1/2 translate-x-[-50%] translate-y-[-50%] w-[263px]">
+        <p className="leading-[49px]">Zarządzanie użytkownikami</p>
+      </div>
     </button>
   );
 }
@@ -136,26 +120,17 @@ function Container2() {
   );
 }
 
-function Paragraph2() {
-  return (
-    <div className="h-[37.813px] relative shrink-0 w-[47.281px]" data-name="Paragraph">
-      <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[37.813px] relative w-[47.281px]">
-        <p className="absolute font-['Arial:Regular',sans-serif] leading-[37.814px] left-[24px] not-italic text-[24.309px] text-center text-nowrap text-white top-0 translate-x-[-50%] whitespace-pre">Sieć</p>
-      </div>
-    </div>
-  );
-}
-
 function Button2({ onClick }: { onClick?: () => void }) {
   return (
-    <div 
+    <button 
       onClick={onClick}
-      className="[grid-area:2_/_1] bg-[#155dfc] content-stretch flex flex-col gap-[16px] items-center justify-center relative rounded-[10px] shrink-0 cursor-pointer hover:bg-[#1249d6] transition-colors" 
+      className="absolute bg-[#155dfc] left-[665px] top-[21px] w-[307px] h-[155px] rounded-[10px] cursor-pointer hover:bg-[#1249d6] transition-colors" 
       data-name="Button"
     >
-      <Container2 />
-      <Paragraph2 />
-    </div>
+      <div className="absolute flex flex-col font-['Arial:Bold',sans-serif] justify-center leading-[0] left-1/2 not-italic text-[32px] text-center text-white top-1/2 translate-x-[-50%] translate-y-[-50%]">
+        <p className="leading-[49px]">Sieć</p>
+      </div>
+    </button>
   );
 }
 
@@ -185,25 +160,16 @@ function Container3() {
   );
 }
 
-function Paragraph3() {
-  return (
-    <div className="h-[37.813px] relative shrink-0 w-[47.281px]" data-name="Paragraph">
-      <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[37.813px] relative w-[47.281px]">
-        <p className="absolute font-['Arial:Regular',sans-serif] leading-[37.814px] left-[24.5px] not-italic text-[24.309px] text-center text-nowrap text-white top-0 translate-x-[-50%] whitespace-pre">Zdarzenia</p>
-      </div>
-    </div>
-  );
-}
-
 function Button3({ onClick }: { onClick?: () => void }) {
   return (
     <button 
       onClick={onClick}
-      className="[grid-area:2_/_2] bg-[#155dfc] content-stretch flex flex-col gap-[16px] items-center justify-center relative rounded-[10px] shrink-0 cursor-pointer hover:bg-[#1250e0] transition-colors" 
+      className="absolute bg-[#155dfc] left-[23px] top-[199px] w-[307px] h-[155px] rounded-[10px] cursor-pointer hover:bg-[#1250e0] transition-colors" 
       data-name="Button"
     >
-      <Container3 />
-      <Paragraph3 />
+      <div className="absolute flex flex-col font-['Arial:Bold',sans-serif] justify-center leading-[0] left-1/2 not-italic text-[32px] text-center text-white top-1/2 translate-x-[-50%] translate-y-[-50%]">
+        <p className="leading-[49px]">Zdarzenia</p>
+      </div>
     </button>
   );
 }
@@ -214,19 +180,18 @@ function Container4() {
 
 function Container5({ onConfigClick, onUsersClick, onNetworkClick, onZdarzeniaClick }: { onConfigClick?: () => void; onUsersClick?: () => void; onNetworkClick?: () => void; onZdarzeniaClick?: () => void }) {
   return (
-    <div className="gap-[23px] grid grid-cols-[repeat(2,_minmax(0px,_1fr))] grid-rows-[repeat(3,_minmax(0px,_1fr))] h-[553px] relative shrink-0 w-full" data-name="Container">
+    <div className="relative h-[508px] w-full" data-name="Container">
       <Button onClick={onConfigClick} />
       <Button1 onClick={onUsersClick} />
       <Button2 onClick={onNetworkClick} />
       <Button3 onClick={onZdarzeniaClick} />
-      <Container4 />
     </div>
   );
 }
 
 function Container6({ onConfigClick, onUsersClick, onNetworkClick, onZdarzeniaClick }: { onConfigClick?: () => void; onUsersClick?: () => void; onNetworkClick?: () => void; onZdarzeniaClick?: () => void }) {
   return (
-    <div className="absolute bg-white box-border content-stretch flex flex-col h-[508px] items-start left-0 pb-0 pt-[27px] px-[27px] rounded-[14px] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] top-0 w-[993px]" data-name="Container">
+    <div className="absolute bg-white box-border content-stretch flex flex-col h-[508px] items-start left-0 rounded-[14px] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] top-0 w-[993px]" data-name="Container">
       <Container5 onConfigClick={onConfigClick} onUsersClick={onUsersClick} onNetworkClick={onNetworkClick} onZdarzeniaClick={onZdarzeniaClick} />
     </div>
   );

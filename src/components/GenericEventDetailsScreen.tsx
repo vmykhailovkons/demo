@@ -4,27 +4,38 @@ import svgPaths from "../imports/svg-vkbumkzwqg";
 interface Event {
   id: number;
   date: string;
-  type: 'deposit' | 'unload' | 'log';
+  type: 'deposit' | 'unload' | 'log' | 'user-management' | 'logout' | 'scan-card' | 'scan-qr' | 'scan-barcode' | 'device-open' | 'device-close';
   status: 'synced' | 'not-sent';
   deviceId?: string;
   timestamp?: string;
   userId?: string;
   userRole?: string;
+  scanSuccess?: boolean;
+  qrData?: string;
+  barcodeData?: string;
+  cardCode?: string;
+  operation?: string;
 }
 
-interface UnloadDetailsScreenProps {
+interface GenericEventDetailsScreenProps {
   onBack?: () => void;
   eventId?: number | null;
+  eventType: 'scan-card' | 'scan-qr' | 'scan-barcode' | 'device-open' | 'device-close' | 'logout';
 }
 
 const EVENTS_STORAGE_KEY = 'zdarzenia_events';
 
-export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsScreenProps) {
+export default function GenericEventDetailsScreen({ onBack, eventId, eventType }: GenericEventDetailsScreenProps) {
   const [isSynchronized, setIsSynchronized] = useState(false);
   const [deviceId, setDeviceId] = useState('12345');
   const [timestamp, setTimestamp] = useState('2025-05-31 14:23:15');
   const [userId, setUserId] = useState('1234');
-  const [userRole, setUserRole] = useState('Kurier');
+  const [userRole, setUserRole] = useState('Klient');
+  const [scanSuccess, setScanSuccess] = useState(true);
+  const [qrData, setQrData] = useState('');
+  const [barcodeData, setBarcodeData] = useState('');
+  const [cardCode, setCardCode] = useState('');
+  const [operation, setOperation] = useState('');
 
   // Завантажуємо статус події з localStorage
   useEffect(() => {
@@ -39,7 +50,12 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
             setDeviceId(event.deviceId || '12345');
             setTimestamp(event.timestamp || event.date || '2025-05-31 14:23:15');
             setUserId(event.userId || '1234');
-            setUserRole(event.userRole || 'Kurier');
+            setUserRole(event.userRole || 'Klient');
+            setScanSuccess(event.scanSuccess !== false);
+            setQrData(event.qrData || '');
+            setBarcodeData(event.barcodeData || '');
+            setCardCode(event.cardCode || '');
+            setOperation(event.operation || '');
           }
         }
       } catch {
@@ -48,8 +64,20 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
     }
   }, [eventId]);
 
+  const getTypeLabel = () => {
+    switch (eventType) {
+      case 'scan-card': return 'Skanowanie karty';
+      case 'scan-qr': return 'Skanowanie QR';
+      case 'scan-barcode': return 'Skanowanie kodu kreskowego';
+      case 'device-open': return 'Otwarcie urządzenia';
+      case 'device-close': return 'Zamknięcie urządzenia';
+      case 'logout': return 'Wylogowanie';
+      default: return eventType;
+    }
+  };
+
   return (
-    <div className="relative h-[600.297px] w-[1024.5px]" data-name="Rozładowanie">
+    <div className="relative h-[600.297px] w-[1024.5px]" data-name="GenericEvent">
       {/* White Container */}
       <div className="absolute bg-white h-[508px] left-1/2 -translate-x-1/2 overflow-clip rounded-[14px] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] top-1/2 -translate-y-1/2 w-[993px]" data-name="Container">
         <div className="absolute content-stretch flex flex-col gap-[16px] h-[466px] items-start left-[24px] overflow-x-clip overflow-y-auto top-[18px] w-[945px]" data-name="Container">
@@ -65,7 +93,7 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
                     <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Typ</p>
                   </div>
                   <div className="absolute h-[28px] left-[18px] top-[46px] w-[428.5px]">
-                    <p className="absolute font-['Arial:Bold',sans-serif] leading-[28px] left-0 not-italic text-[#155dfc] text-[20px] text-nowrap top-[-0.33px] whitespace-pre">Rozładowanie</p>
+                    <p className="absolute font-['Arial:Bold',sans-serif] leading-[28px] left-0 not-italic text-[#155dfc] text-[20px] text-nowrap top-[-0.33px] whitespace-pre">{getTypeLabel()}</p>
                   </div>
                 </div>
               </div>
@@ -130,7 +158,7 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
               <div className="[grid-area:1_/_2] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
                 <div className="h-[20px] relative shrink-0 w-[464.5px]">
                   <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Data, godzina rozładowania</p>
+                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Data, godzina zdarzenia</p>
                   </div>
                 </div>
                 <div className="h-[24px] relative shrink-0 w-[464.5px]">

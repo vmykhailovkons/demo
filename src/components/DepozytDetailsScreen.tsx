@@ -14,6 +14,7 @@ interface Event {
   userId?: string;
   userRole?: string;
   transactionId?: number;
+  depositStatus?: 'Potwierdzona' | 'Niepotwierdzona';
 }
 
 interface DepozytDetailsScreenProps {
@@ -31,7 +32,9 @@ export default function DepozytDetailsScreen({ onBack, eventId }: DepozytDetails
   const [deviceId, setDeviceId] = useState('123');
   const [timestamp, setTimestamp] = useState('2021-05-31 14:23:15');
   const [userId, setUserId] = useState('1234');
+  const [userRole, setUserRole] = useState('Klient');
   const [transactionId, setTransactionId] = useState('1234567890');
+  const [depositStatus, setDepositStatus] = useState('Potwierdzona');
 
   // Завантажуємо статус події з localStorage
   useEffect(() => {
@@ -49,7 +52,9 @@ export default function DepozytDetailsScreen({ onBack, eventId }: DepozytDetails
             setDeviceId(event.deviceId || '123');
             setTimestamp(event.timestamp || event.date || '2021-05-31 14:23:15');
             setUserId(event.userId || '1234');
+            setUserRole(event.userRole || 'Klient');
             setTransactionId(event.transactionId ? event.transactionId.toString() : '1234567890');
+            setDepositStatus(event.depositStatus || 'Potwierdzona');
           }
         }
       } catch {
@@ -310,6 +315,15 @@ export default function DepozytDetailsScreen({ onBack, eventId }: DepozytDetails
               <div className="[grid-area:3_/_1] content-stretch flex flex-col gap-[4px] h-[64px] items-start relative self-start shrink-0">
                 <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] text-nowrap whitespace-pre">ID transakcji</p>
                 <p className="font-['Arial:Regular',sans-serif] leading-[24px] not-italic text-[#101828] text-[16px] text-nowrap whitespace-pre">{transactionId}</p>
+              </div>
+              <div className="[grid-area:3_/_2] content-stretch flex flex-col gap-[4px] h-[64px] items-start relative self-start shrink-0">
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] text-nowrap whitespace-pre">Status wpłaty</p>
+                <p 
+                  className="font-['Arial:Regular',sans-serif] leading-[24px] not-italic text-[16px] text-nowrap whitespace-pre"
+                  style={{ color: depositStatus === 'Potwierdzona' ? '#00a63e' : '#e7000b' }}
+                >
+                  {depositStatus}
+                </p>
               </div>
             </div>
           </div>

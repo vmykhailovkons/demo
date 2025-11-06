@@ -4,27 +4,31 @@ import svgPaths from "../imports/svg-vkbumkzwqg";
 interface Event {
   id: number;
   date: string;
-  type: 'deposit' | 'unload' | 'log';
+  type: 'user-management';
   status: 'synced' | 'not-sent';
   deviceId?: string;
   timestamp?: string;
   userId?: string;
   userRole?: string;
+  action?: 'add' | 'edit' | 'delete';
+  performedBy?: string;
 }
 
-interface UnloadDetailsScreenProps {
+interface UserManagementDetailsScreenProps {
   onBack?: () => void;
   eventId?: number | null;
 }
 
 const EVENTS_STORAGE_KEY = 'zdarzenia_events';
 
-export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsScreenProps) {
+export default function UserManagementDetailsScreen({ onBack, eventId }: UserManagementDetailsScreenProps) {
   const [isSynchronized, setIsSynchronized] = useState(false);
   const [deviceId, setDeviceId] = useState('12345');
   const [timestamp, setTimestamp] = useState('2025-05-31 14:23:15');
-  const [userId, setUserId] = useState('1234');
-  const [userRole, setUserRole] = useState('Kurier');
+  const [userId, setUserId] = useState('5678');
+  const [userRole, setUserRole] = useState('Klient');
+  const [action, setAction] = useState<'add' | 'edit' | 'delete'>('add');
+  const [performedBy, setPerformedBy] = useState('Master');
 
   // Завантажуємо статус події з localStorage
   useEffect(() => {
@@ -38,8 +42,10 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
             setIsSynchronized(event.status === 'synced');
             setDeviceId(event.deviceId || '12345');
             setTimestamp(event.timestamp || event.date || '2025-05-31 14:23:15');
-            setUserId(event.userId || '1234');
-            setUserRole(event.userRole || 'Kurier');
+            setUserId(event.userId || '5678');
+            setUserRole(event.userRole || 'Klient');
+            setAction(event.action || 'add');
+            setPerformedBy(event.performedBy || 'Master');
           }
         }
       } catch {
@@ -48,8 +54,17 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
     }
   }, [eventId]);
 
+  const getActionLabel = () => {
+    switch (action) {
+      case 'add': return 'Dodano użytkownika';
+      case 'edit': return 'Edytowano użytkownika';
+      case 'delete': return 'Usunięto użytkownika';
+      default: return action;
+    }
+  };
+
   return (
-    <div className="relative h-[600.297px] w-[1024.5px]" data-name="Rozładowanie">
+    <div className="relative h-[600.297px] w-[1024.5px]" data-name="UserManagement">
       {/* White Container */}
       <div className="absolute bg-white h-[508px] left-1/2 -translate-x-1/2 overflow-clip rounded-[14px] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] top-1/2 -translate-y-1/2 w-[993px]" data-name="Container">
         <div className="absolute content-stretch flex flex-col gap-[16px] h-[466px] items-start left-[24px] overflow-x-clip overflow-y-auto top-[18px] w-[945px]" data-name="Container">
@@ -65,7 +80,7 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
                     <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Typ</p>
                   </div>
                   <div className="absolute h-[28px] left-[18px] top-[46px] w-[428.5px]">
-                    <p className="absolute font-['Arial:Bold',sans-serif] leading-[28px] left-0 not-italic text-[#155dfc] text-[20px] text-nowrap top-[-0.33px] whitespace-pre">Rozładowanie</p>
+                    <p className="absolute font-['Arial:Bold',sans-serif] leading-[28px] left-0 not-italic text-[#155dfc] text-[20px] text-nowrap top-[-0.33px] whitespace-pre">Zarządzanie użytkownikami</p>
                   </div>
                 </div>
               </div>
@@ -113,8 +128,8 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
           </div>
 
           {/* Device Data Grid */}
-          <div className="h-[197px] relative shrink-0 w-[945px]">
-            <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border gap-[16px] grid grid-cols-[repeat(2,_minmax(0px,_1fr))] grid-rows-[44px_64px_minmax(0px,_1fr)] h-[197px] relative w-[945px]">
+          <div className="h-[261px] relative shrink-0 w-[945px]">
+            <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border gap-[16px] grid grid-cols-[repeat(2,_minmax(0px,_1fr))] grid-rows-[44px_64px_64px_minmax(0px,_1fr)] h-[261px] relative w-[945px]">
               <div className="[grid-area:1_/_1] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
                 <div className="h-[20px] relative shrink-0 w-[464.5px]">
                   <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
@@ -130,7 +145,7 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
               <div className="[grid-area:1_/_2] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
                 <div className="h-[20px] relative shrink-0 w-[464.5px]">
                   <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Data, godzina rozładowania</p>
+                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Data, godzina zdarzenia</p>
                   </div>
                 </div>
                 <div className="h-[24px] relative shrink-0 w-[464.5px]">
@@ -160,6 +175,30 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
                 <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
                   <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-full relative w-[464.5px]">
                     <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{userRole}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="[grid-area:3_/_1] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
+                <div className="h-[20px] relative shrink-0 w-[464.5px]">
+                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
+                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Akcja</p>
+                  </div>
+                </div>
+                <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
+                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-full relative w-[464.5px]">
+                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{getActionLabel()}</p>
+                  </div>
+                </div>
+              </div>
+              <div className="[grid-area:3_/_2] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
+                <div className="h-[20px] relative shrink-0 w-[464.5px]">
+                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
+                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Wykonano przez</p>
+                  </div>
+                </div>
+                <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
+                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-full relative w-[464.5px]">
+                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{performedBy}</p>
                   </div>
                 </div>
               </div>

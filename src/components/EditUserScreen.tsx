@@ -40,19 +40,17 @@ export default function EditUserScreen({
   const handleCardScanClick = () => {
     if (scanState === 'prompt') {
       setScanState('scanning');
+    } else if (scanState === 'scanning') {
+      // If in scanning state, clicking moves to result immediately
+      const randomSuccess = Math.random() > 0.3; // 70% success rate
       
-      // After 2 seconds, randomly show scanned or not-scanned state
-      setTimeout(() => {
-        const randomSuccess = Math.random() > 0.3; // 70% success rate
-        
-        if (randomSuccess) {
-          const newId = generateRandomId();
-          setScannedCard(newId);
-          setScanState('scanned');
-        } else {
-          setScanState('not-scanned');
-        }
-      }, 2000);
+      if (randomSuccess) {
+        const newId = generateRandomId();
+        setScannedCard(newId);
+        setScanState('scanned');
+      } else {
+        setScanState('not-scanned');
+      }
     } else if (scanState === 'not-scanned') {
       // If "Nie zeskanowano" is clicked, go back to prompt
       setScanState('prompt');
@@ -86,7 +84,7 @@ export default function EditUserScreen({
               scanState === 'not-scanned' ? 'bg-red-50' : 
               'bg-blue-50'
             } ${
-              scanState === 'prompt' || scanState === 'not-scanned' 
+              scanState !== 'scanned' 
                 ? 'cursor-pointer hover:opacity-90 transition-opacity' 
                 : ''
             }`}

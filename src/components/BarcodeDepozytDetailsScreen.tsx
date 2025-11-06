@@ -1,30 +1,38 @@
 import { useState, useEffect } from "react";
-import svgPaths from "../imports/svg-vkbumkzwqg";
+import svgPaths from "../imports/svg-oudj9i2ffx";
 
 interface Event {
   id: number;
   date: string;
   type: 'deposit' | 'unload' | 'log';
   status: 'synced' | 'not-sent';
+  barcode?: string;
+  hasQrData?: boolean;
+  envelopeNumber?: string;
   deviceId?: string;
   timestamp?: string;
   userId?: string;
   userRole?: string;
+  transactionId?: number;
+  depositStatus?: 'Potwierdzona' | 'Niepotwierdzona';
 }
 
-interface UnloadDetailsScreenProps {
+interface BarcodeDepozytDetailsScreenProps {
   onBack?: () => void;
   eventId?: number | null;
 }
 
 const EVENTS_STORAGE_KEY = 'zdarzenia_events';
 
-export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsScreenProps) {
+export default function BarcodeDepozytDetailsScreen({ onBack, eventId }: BarcodeDepozytDetailsScreenProps) {
   const [isSynchronized, setIsSynchronized] = useState(false);
-  const [deviceId, setDeviceId] = useState('12345');
-  const [timestamp, setTimestamp] = useState('2025-05-31 14:23:15');
+  const [barcode, setBarcode] = useState('');
+  const [deviceId, setDeviceId] = useState('123');
+  const [timestamp, setTimestamp] = useState('2021-05-31 14:23:15');
   const [userId, setUserId] = useState('1234');
-  const [userRole, setUserRole] = useState('Kurier');
+  const [userRole, setUserRole] = useState('Klient');
+  const [transactionId, setTransactionId] = useState('1234567890');
+  const [depositStatus, setDepositStatus] = useState('Potwierdzona');
 
   // Завантажуємо статус події з localStorage
   useEffect(() => {
@@ -36,10 +44,13 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
           const event = events.find(e => e.id === eventId);
           if (event) {
             setIsSynchronized(event.status === 'synced');
-            setDeviceId(event.deviceId || '12345');
-            setTimestamp(event.timestamp || event.date || '2025-05-31 14:23:15');
+            setBarcode(event.barcode || '');
+            setDeviceId(event.deviceId || '123');
+            setTimestamp(event.timestamp || event.date || '2021-05-31 14:23:15');
             setUserId(event.userId || '1234');
-            setUserRole(event.userRole || 'Kurier');
+            setUserRole(event.userRole || 'Klient');
+            setTransactionId(event.transactionId ? event.transactionId.toString() : '1234567890');
+            setDepositStatus(event.depositStatus || 'Potwierdzona');
           }
         }
       } catch {
@@ -49,7 +60,7 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
   }, [eventId]);
 
   return (
-    <div className="relative h-[600.297px] w-[1024.5px]" data-name="Rozładowanie">
+    <div className="relative h-[600.297px] w-[1024.5px]" data-name="Depozyt">
       {/* White Container */}
       <div className="absolute bg-white h-[508px] left-1/2 -translate-x-1/2 overflow-clip rounded-[14px] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)] top-1/2 -translate-y-1/2 w-[993px]" data-name="Container">
         <div className="absolute content-stretch flex flex-col gap-[16px] h-[466px] items-start left-[24px] overflow-x-clip overflow-y-auto top-[18px] w-[945px]" data-name="Container">
@@ -65,7 +76,7 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
                     <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Typ</p>
                   </div>
                   <div className="absolute h-[28px] left-[18px] top-[46px] w-[428.5px]">
-                    <p className="absolute font-['Arial:Bold',sans-serif] leading-[28px] left-0 not-italic text-[#155dfc] text-[20px] text-nowrap top-[-0.33px] whitespace-pre">Rozładowanie</p>
+                    <p className="absolute font-['Arial:Bold',sans-serif] leading-[28px] left-0 not-italic text-[#155dfc] text-[20px] text-nowrap top-[-0.33px] whitespace-pre">Wpłata</p>
                   </div>
                 </div>
               </div>
@@ -93,6 +104,32 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
             </div>
           </div>
 
+          {/* Dane z kodu kreskowego Header */}
+          <div className="h-[36px] relative shrink-0 w-[945px]">
+            <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border content-stretch flex gap-[12px] h-[36px] items-center relative w-[945px]">
+              <div className="h-[36px] relative shrink-0 w-[250px]">
+                <p className="absolute font-['Arial:Regular',sans-serif] leading-[36px] left-0 not-italic text-[#101828] text-[24px] text-nowrap top-0 whitespace-pre">Dane z kodu kreskowego</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Barcode Data */}
+          <div className="h-[44px] relative shrink-0 w-[945px]">
+            <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border gap-[16px] grid grid-cols-[repeat(2,_minmax(0px,_1fr))] grid-rows-[repeat(1,_minmax(0px,_1fr))] h-[44px] relative w-[945px]">
+              <div className="[grid-area:1_/_1] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
+                <div className="h-[20px] relative shrink-0 w-[464.5px]">
+                  <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Kod kreskowy</p>
+                </div>
+                <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
+                  <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{barcode}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="bg-gray-200 h-px relative shrink-0 w-[945px]" />
+
           {/* Dane z urządzenia Header */}
           <div className="h-[36px] relative shrink-0 w-[945px]">
             <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border content-stretch flex gap-[12px] h-[36px] items-center relative w-[945px]">
@@ -116,52 +153,33 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
           <div className="h-[197px] relative shrink-0 w-[945px]">
             <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border gap-[16px] grid grid-cols-[repeat(2,_minmax(0px,_1fr))] grid-rows-[44px_64px_minmax(0px,_1fr)] h-[197px] relative w-[945px]">
               <div className="[grid-area:1_/_1] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
-                <div className="h-[20px] relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Id trezora</p>
-                  </div>
-                </div>
-                <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-full relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{deviceId}</p>
-                  </div>
-                </div>
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] text-nowrap whitespace-pre">Numer użytej karty</p>
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#101828] text-[14px] text-nowrap whitespace-pre">{userId}</p>
               </div>
               <div className="[grid-area:1_/_2] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
-                <div className="h-[20px] relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Data, godzina rozładowania</p>
-                  </div>
-                </div>
-                <div className="h-[24px] relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[24px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[24px] left-0 not-italic text-[#101828] text-[16px] text-nowrap top-0 whitespace-pre">{timestamp}</p>
-                  </div>
-                </div>
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] text-nowrap whitespace-pre">Id trezora</p>
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#101828] text-[14px] text-nowrap whitespace-pre">{deviceId}</p>
               </div>
               <div className="[grid-area:2_/_1] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
-                <div className="h-[20px] relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Id użytkownika</p>
-                  </div>
-                </div>
-                <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-full relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{userId}</p>
-                  </div>
-                </div>
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] text-nowrap whitespace-pre">Data, godzina wpłaty</p>
+                <p className="font-['Arial:Regular',sans-serif] leading-[24px] not-italic text-[#101828] text-[16px] text-nowrap whitespace-pre">{timestamp}</p>
               </div>
               <div className="[grid-area:2_/_2] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
-                <div className="h-[20px] relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Rola użytkownika</p>
-                  </div>
-                </div>
-                <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-full relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{userRole}</p>
-                  </div>
-                </div>
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] w-[400px]">Numer bezpiecznej koperty wprowadzony przez wpłacającego w trezorze/zeskanowanego z koperty (kod kreskowy)</p>
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#101828] text-[14px] text-nowrap whitespace-pre">{barcode || ''}</p>
+              </div>
+              <div className="[grid-area:3_/_1] content-stretch flex flex-col gap-[4px] h-[64px] items-start relative self-start shrink-0">
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] text-nowrap whitespace-pre">ID transakcji</p>
+                <p className="font-['Arial:Regular',sans-serif] leading-[24px] not-italic text-[#101828] text-[16px] text-nowrap whitespace-pre">{transactionId}</p>
+              </div>
+              <div className="[grid-area:3_/_2] content-stretch flex flex-col gap-[4px] h-[64px] items-start relative self-start shrink-0">
+                <p className="font-['Arial:Regular',sans-serif] leading-[20px] not-italic text-[#4a5565] text-[14px] text-nowrap whitespace-pre">Status wpłaty</p>
+                <p 
+                  className="font-['Arial:Regular',sans-serif] leading-[24px] not-italic text-[16px] text-nowrap whitespace-pre"
+                  style={{ color: depositStatus === 'Potwierdzona' ? '#00a63e' : '#e7000b' }}
+                >
+                  {depositStatus}
+                </p>
               </div>
             </div>
           </div>

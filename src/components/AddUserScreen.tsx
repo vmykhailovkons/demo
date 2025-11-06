@@ -26,19 +26,17 @@ export default function AddUserScreen({ onSave, onBack, onLogout }: AddUserScree
   const handleCardBoxClick = () => {
     if (!isLoading && !isScanned && !scanError) {
       setIsLoading(true);
+    } else if (isLoading) {
+      // If in scanning state, clicking moves to result immediately
+      setIsLoading(false);
+      const isSuccess = Math.random() > 0.5;
       
-      // After 2 seconds, randomly show success or error (50/50 chance)
-      setTimeout(() => {
-        setIsLoading(false);
-        const isSuccess = Math.random() > 0.5;
-        
-        if (isSuccess) {
-          setIsScanned(true);
-          setScannedCard(generateRandomId());
-        } else {
-          setScanError(true);
-        }
-      }, 2000);
+      if (isSuccess) {
+        setIsScanned(true);
+        setScannedCard(generateRandomId());
+      } else {
+        setScanError(true);
+      }
     }
   };
 
@@ -67,7 +65,7 @@ export default function AddUserScreen({ onSave, onBack, onLogout }: AddUserScree
                 scanError ? 'bg-red-50 cursor-pointer hover:bg-red-100 transition-colors' : 
                 isScanned ? 'bg-green-50' : 
                 'bg-blue-50'
-              } ${!isScanned && !isLoading && !scanError ? 'cursor-pointer hover:bg-blue-100 transition-colors' : ''}`}
+              } ${!isScanned && !scanError ? 'cursor-pointer hover:bg-blue-100 transition-colors' : ''}`}
               data-name="Container"
             >
               <div aria-hidden="true" className={`absolute border-4 border-solid inset-0 pointer-events-none rounded-[14px] ${

@@ -4,14 +4,22 @@ import svgPaths from '../imports/svg-dnno0w0mur';
 interface Event {
   id: number;
   date: string;
-  type: 'deposit' | 'unload' | 'log';
+  type: 'deposit' | 'unload' | 'log' | 'user-management' | 'logout' | 'scan-card' | 'scan-qr' | 'scan-barcode' | 'device-open' | 'device-close';
   status: 'synced' | 'not-sent';
   barcode?: string;
   hasQrData?: boolean;
+  action?: 'add' | 'edit' | 'delete' | string;
+  userId?: string;
+  userRole?: string;
+  scanSuccess?: boolean;
+  qrData?: string;
+  barcodeData?: string;
+  cardCode?: string;
+  operation?: string;
 }
 
 interface ZdarzeniaScreenProps {
-  onDetailsClick?: (eventId: number, eventType: 'deposit' | 'unload' | 'log') => void;
+  onDetailsClick?: (eventId: number, eventType: string) => void;
   onSyncClick?: (eventId: number) => void;
 }
 
@@ -28,6 +36,13 @@ const defaultEvents: Event[] = [
   { id: 8, date: '2025-10-16 15:10:45', type: 'unload', status: 'not-sent' },
   { id: 9, date: '2025-10-16 14:05:20', type: 'log', status: 'synced' },
   { id: 10, date: '2025-10-16 13:00:00', type: 'deposit', status: 'synced' },
+  { id: 11, date: '2025-10-16 12:45:30', type: 'scan-card', status: 'synced' },
+  { id: 12, date: '2025-10-16 12:30:15', type: 'scan-qr', status: 'not-sent' },
+  { id: 13, date: '2025-10-16 12:15:00', type: 'scan-barcode', status: 'synced' },
+  { id: 14, date: '2025-10-16 11:00:45', type: 'device-open', status: 'synced' },
+  { id: 15, date: '2025-10-16 10:45:30', type: 'device-close', status: 'not-sent' },
+  { id: 16, date: '2025-10-16 10:30:15', type: 'logout', status: 'synced' },
+  { id: 17, date: '2025-10-16 10:15:00', type: 'user-management', status: 'not-sent', action: 'add', userId: '5678', userRole: 'Klient' },
 ];
 
 export default function ZdarzeniaScreen({ onDetailsClick, onSyncClick }: ZdarzeniaScreenProps) {
@@ -60,7 +75,7 @@ export default function ZdarzeniaScreen({ onDetailsClick, onSyncClick }: Zdarzen
           settings.ip === '192.168.1.3' && 
           settings.port === '8080' && 
           settings.login === 'admin' && 
-          settings.password === 'admin';
+          settings.password === 'konsmetal';
       } catch {
         isConnected = false;
       }
@@ -95,6 +110,14 @@ export default function ZdarzeniaScreen({ onDetailsClick, onSyncClick }: Zdarzen
       case 'deposit': return 'Wpłata';
       case 'unload': return 'Rozładowanie';
       case 'log': return 'Logowanie';
+      case 'user-management': return 'Zarządzanie użytkownikami';
+      case 'logout': return 'Wylogowanie';
+      case 'scan-card': return 'Skanowanie karty';
+      case 'scan-qr': return 'Skanowanie QR';
+      case 'scan-barcode': return 'Skanowanie kodu kreskowego';
+      case 'device-open': return 'Otwarcie urządzenia';
+      case 'device-close': return 'Zamknięcie urządzenia';
+      default: return type;
     }
   };
 

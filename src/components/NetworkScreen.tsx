@@ -39,7 +39,7 @@ export default function NetworkScreen({ onSave, onBack }: NetworkScreenProps) {
     settings.ip === '192.168.1.3' && 
     settings.port === '8080' && 
     settings.login === 'admin' && 
-    settings.password === 'admin';
+    settings.password === 'konsmetal';
 
   // Автоматично зберігаємо налаштування при зміні
   useEffect(() => {

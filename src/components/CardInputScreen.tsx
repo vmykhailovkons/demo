@@ -82,15 +82,17 @@ export default function CardInputScreen({ onCardSubmit }: CardInputScreenProps) 
         <div className="absolute bg-slate-50 h-[170px] left-[178px] rounded-[14px] top-[33px] w-[467px]" data-name="Container1">
           <div className="absolute content-stretch flex flex-col h-[92px] items-start left-0 rounded-[14px] top-[-7px] w-[377px]" data-name="Container">
             <div 
-              className={`absolute h-[174px] left-0 rounded-[14px] top-[3px] w-[467px] ${cardCode.length > 0 ? 'cursor-pointer' : ''}`} 
+              className={`absolute h-[174px] left-0 rounded-[14px] top-[3px] w-[467px] ${cardCode.length > 0 ? 'cursor-pointer hover:bg-slate-100' : 'cursor-not-allowed'} transition-colors`} 
               data-name="Container"
               onClick={handleSimulateCard}
+              role="button"
+              tabIndex={cardCode.length > 0 ? 0 : -1}
             >
               <div 
                 aria-hidden="true" 
                 className="absolute border-4 border-solid inset-0 pointer-events-none rounded-[14px] border-[#cad5e2]" 
               />
-              <p className="absolute font-['Arial:Regular',sans-serif] leading-[24px] left-[73px] not-italic text-[#45556c] text-[16px] text-nowrap top-[53px] whitespace-pre">
+              <p className="absolute font-['Arial:Regular',sans-serif] leading-[24px] left-[73px] not-italic text-[#45556c] text-[16px] text-nowrap top-[53px] whitespace-pre pointer-events-none">
                 Nacisnij żeby symulować przyłożenie karty
               </p>
             </div>

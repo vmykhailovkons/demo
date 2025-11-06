@@ -16,8 +16,11 @@ import EditUserScreen from "./components/EditUserScreen";
 import NetworkScreen from "./components/NetworkScreen";
 import ZdarzeniaScreen from "./components/ZdarzeniaScreen";
 import DepozytDetailsScreen from "./components/DepozytDetailsScreen";
+import BarcodeDepozytDetailsScreen from "./components/BarcodeDepozytDetailsScreen";
 import UnloadDetailsScreen from "./components/UnloadDetailsScreen";
 import LogowanieDetailsScreen from "./components/LogowanieDetailsScreen";
+import UserManagementDetailsScreen from "./components/UserManagementDetailsScreen";
+import GenericEventDetailsScreen from "./components/GenericEventDetailsScreen";
 import CardInputScreen from "./components/CardInputScreen";
 import PinInputScreen from "./components/PinInputScreen";
 import SetupPinScreen from "./components/SetupPinScreen";
@@ -58,7 +61,7 @@ import DepositInstructionScreen from "./components/DepositInstructionScreen";
 import { OpenSlotInstructionScreen } from "./components/OpenSlotInstructionScreen";
 import { PlaceDepositCloseSlotScreen } from "./components/PlaceDepositCloseSlotScreen";
 
-function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBackToCard, onBackToQR }: { isLoggedIn: boolean; onLogout?: () => void; currentScreen?: 'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'invalid-qr' | 'barcode' | 'barcode-scanned' | 'invalid-barcode' | 'success' | 'deposit' | 'deposit-instruction' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'open-slot-instruction' | 'place-deposit-close-slot'; onBack?: () => void; loginStep?: 'card' | 'pin' | 'setup-pin' | 'logged-in'; onBackToCard?: () => void; onBackToQR?: () => void }) {
+function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBackToCard, onBackToQR }: { isLoggedIn: boolean; onLogout?: () => void; currentScreen?: 'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'invalid-qr' | 'barcode' | 'barcode-scanned' | 'invalid-barcode' | 'success' | 'deposit' | 'deposit-instruction' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'event-details-user-management' | 'event-details-scan-card' | 'event-details-scan-qr' | 'event-details-scan-barcode' | 'event-details-device-open' | 'event-details-device-close' | 'event-details-logout' | 'open-slot-instruction' | 'place-deposit-close-slot'; onBack?: () => void; loginStep?: 'card' | 'pin' | 'setup-pin' | 'logged-in'; onBackToCard?: () => void; onBackToQR?: () => void }) {
   const getTitle = () => {
     if (!isLoggedIn) return 'Logowanie do systemu';
     if (currentScreen === 'master') return 'Master';
@@ -71,6 +74,13 @@ function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBack
     if (currentScreen === 'event-details-deposit') return 'Szczegóły wpłaty';
     if (currentScreen === 'event-details-unload') return 'Szczegóły rozładowania';
     if (currentScreen === 'event-details-log') return 'Szczegóły logowania';
+    if (currentScreen === 'event-details-user-management') return 'Szczegóły zarządzania użytkownikami';
+    if (currentScreen === 'event-details-scan-card') return 'Szczegóły skanowania karty';
+    if (currentScreen === 'event-details-scan-qr') return 'Szczegóły skanowania QR';
+    if (currentScreen === 'event-details-scan-barcode') return 'Szczegóły skanowania kodu kreskowego';
+    if (currentScreen === 'event-details-device-open') return 'Szczegóły otwarcia urządzenia';
+    if (currentScreen === 'event-details-device-close') return 'Szczegóły zamknięcia urządzenia';
+    if (currentScreen === 'event-details-logout') return 'Szczegóły wylogowania';
     if (currentScreen === 'add-user') return 'Dodaj użytkownika';
     if (currentScreen === 'edit-user') return 'Edycja użytkownika';
     if (currentScreen === 'unloading-completed' || currentScreen === 'unloading-summary') return 'Zrealizowane odsilenie';
@@ -98,7 +108,7 @@ function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBack
     <div className="w-full bg-[#1e2939] h-[64px] shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1),0px_4px_6px_-4px_rgba(0,0,0,0.1)]" data-name="Navbar">
       <div className="px-4 h-full flex items-center justify-between">
         <div className="flex items-center gap-4">
-          {(currentScreen === 'release-latch' || currentScreen === 'open-doors' || currentScreen === 'pull-out-bag' || currentScreen === 'insert-empty-bag' || currentScreen === 'close-door' || currentScreen === 'close-latch' || currentScreen === 'unload-completed-screen' || currentScreen === 'unloading-completed' || currentScreen === 'unloading-summary' || currentScreen === 'replace-bag-release-latch' || currentScreen === 'replace-bag-open-doors' || currentScreen === 'replace-bag-insert-empty' || currentScreen === 'replace-bag-close-doors' || currentScreen === 'replace-bag-close-latch' || currentScreen === 'replace-bag-completed' || currentScreen === 'replace-paper-open-doors' || currentScreen === 'replace-paper' || currentScreen === 'replace-paper-close-doors' || currentScreen === 'replace-paper-completed' || currentScreen === 'master-config' || currentScreen === 'master-ogolne' || currentScreen === 'master-kontrola' || currentScreen === 'master-users' || currentScreen === 'add-user' || currentScreen === 'edit-user' || currentScreen === 'master-network' || currentScreen === 'master-zdarzenia' || currentScreen === 'event-details-deposit' || currentScreen === 'event-details-unload' || currentScreen === 'event-details-log') && onBack && (
+          {(currentScreen === 'release-latch' || currentScreen === 'open-doors' || currentScreen === 'pull-out-bag' || currentScreen === 'insert-empty-bag' || currentScreen === 'close-door' || currentScreen === 'close-latch' || currentScreen === 'unload-completed-screen' || currentScreen === 'unloading-completed' || currentScreen === 'unloading-summary' || currentScreen === 'replace-bag-release-latch' || currentScreen === 'replace-bag-open-doors' || currentScreen === 'replace-bag-insert-empty' || currentScreen === 'replace-bag-close-doors' || currentScreen === 'replace-bag-close-latch' || currentScreen === 'replace-bag-completed' || currentScreen === 'replace-paper-open-doors' || currentScreen === 'replace-paper' || currentScreen === 'replace-paper-close-doors' || currentScreen === 'replace-paper-completed' || currentScreen === 'master-config' || currentScreen === 'master-ogolne' || currentScreen === 'master-kontrola' || currentScreen === 'master-users' || currentScreen === 'add-user' || currentScreen === 'edit-user' || currentScreen === 'master-network' || currentScreen === 'master-zdarzenia' || currentScreen === 'event-details-deposit' || currentScreen === 'event-details-unload' || currentScreen === 'event-details-log' || currentScreen === 'event-details-user-management' || currentScreen === 'event-details-scan-card' || currentScreen === 'event-details-scan-qr' || currentScreen === 'event-details-scan-barcode' || currentScreen === 'event-details-device-open' || currentScreen === 'event-details-device-close' || currentScreen === 'event-details-logout') && onBack && (
             <button
               onClick={onBack}
               className="bg-[rgba(255,255,255,0.1)] flex gap-2 items-center px-4 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.2)] transition-colors"
@@ -663,9 +673,10 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState<'deposit' | 'unloading' | 'master'>('deposit');
   const [currentUserId, setCurrentUserId] = useState<string>('');
-  const [currentScreen, setCurrentScreen] = useState<'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'barcode' | 'barcode-scanned' | 'success' | 'deposit' | 'deposit-instruction' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'invalid-qr' | 'invalid-barcode' | 'open-slot-instruction' | 'place-deposit-close-slot'>('qr');
+  const [currentScreen, setCurrentScreen] = useState<'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'barcode' | 'barcode-scanned' | 'success' | 'deposit' | 'deposit-instruction' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'event-details-scan-card' | 'event-details-scan-qr' | 'event-details-scan-barcode' | 'event-details-device-open' | 'event-details-device-close' | 'event-details-logout' | 'invalid-qr' | 'invalid-barcode' | 'open-slot-instruction' | 'place-deposit-close-slot'>('qr');
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
+  const [selectedEventHasQrData, setSelectedEventHasQrData] = useState<boolean>(true);
   const [barcode, setBarcode] = useState('');
   const [hasScannedQr, setHasScannedQr] = useState(false);
   const [envelopeNumber, setEnvelopeNumber] = useState('A23909090');
@@ -725,7 +736,7 @@ export default function App() {
   }, [users]);
 
   // Function to add deposit event to zdarzenia
-  const addDepositEvent = (barcodeValue: string, hasQr: boolean, envelopeNum: string) => {
+  const addDepositEvent = (barcodeValue: string, hasQr: boolean, envelopeNum: string, depositStatus: 'Potwierdzona' | 'Niepotwierdzona' = 'Potwierdzona') => {
     const EVENTS_STORAGE_KEY = 'zdarzenia_events';
     const TRANSACTION_COUNTER_KEY = 'transaction_counter';
     try {
@@ -764,7 +775,7 @@ export default function App() {
             settings.ip === '192.168.1.3' && 
             settings.port === '8080' && 
             settings.login === 'admin' && 
-            settings.password === 'admin';
+            settings.password === 'konsmetal';
         } catch {
           isConnected = false;
         }
@@ -785,7 +796,8 @@ export default function App() {
         deviceId: deviceId,
         timestamp: timestamp,
         userId: currentUserId,
-        transactionId: transactionId
+        transactionId: transactionId,
+        depositStatus: depositStatus
       };
       
       // Add to beginning of array
@@ -828,7 +840,7 @@ export default function App() {
             settings.ip === '192.168.1.3' && 
             settings.port === '8080' && 
             settings.login === 'admin' && 
-            settings.password === 'admin';
+            settings.password === 'konsmetal';
         } catch {
           isConnected = false;
         }
@@ -889,7 +901,7 @@ export default function App() {
             settings.ip === '192.168.1.3' && 
             settings.port === '8080' && 
             settings.login === 'admin' && 
-            settings.password === 'admin';
+            settings.password === 'konsmetal';
         } catch {
           isConnected = false;
         }
@@ -918,6 +930,130 @@ export default function App() {
     }
   };
 
+  // Function to add user management event to zdarzenia
+  const addUserManagementEvent = (action: 'add' | 'edit' | 'delete', userId: string, userRole: string) => {
+    const EVENTS_STORAGE_KEY = 'zdarzenia_events';
+    try {
+      const stored = localStorage.getItem(EVENTS_STORAGE_KEY);
+      const events = stored ? JSON.parse(stored) : [];
+      
+      // Get device ID from device config
+      let deviceId = 'DEV-2025-001'; // Default
+      const deviceConfig = localStorage.getItem('device_config');
+      if (deviceConfig) {
+        try {
+          const config = JSON.parse(deviceConfig);
+          deviceId = config.deviceId || deviceId;
+        } catch {
+          // Use default
+        }
+      }
+      
+      // Check network connection status
+      const networkSettings = localStorage.getItem('networkSettings');
+      let isConnected = false;
+      
+      if (networkSettings) {
+        try {
+          const settings = JSON.parse(networkSettings);
+          isConnected = 
+            settings.ip === '192.168.1.3' && 
+            settings.port === '8080' && 
+            settings.login === 'admin' && 
+            settings.password === 'konsmetal';
+        } catch {
+          isConnected = false;
+        }
+      }
+      
+      // Create timestamp in current moment
+      const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      
+      // Create new event with status based on connection
+      const newEvent = {
+        id: Date.now() + Math.random(), // Use timestamp + random as unique ID
+        date: timestamp,
+        type: 'user-management' as const,
+        action: action,
+        status: isConnected ? ('synced' as const) : ('not-sent' as const),
+        userId: userId,
+        userRole: userRole,
+        deviceId: deviceId,
+        timestamp: timestamp,
+        performedBy: currentUserId
+      };
+      
+      // Add to beginning of array
+      events.unshift(newEvent);
+      
+      // Save back to localStorage
+      localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events));
+    } catch (error) {
+      console.error('Error saving user management event:', error);
+    }
+  };
+
+  // Generic function to add any event to zdarzenia
+  const addGenericEvent = (eventType: string, additionalData: any = {}) => {
+    const EVENTS_STORAGE_KEY = 'zdarzenia_events';
+    try {
+      const stored = localStorage.getItem(EVENTS_STORAGE_KEY);
+      const events = stored ? JSON.parse(stored) : [];
+      
+      // Get device ID from device config
+      let deviceId = 'DEV-2025-001'; // Default
+      const deviceConfig = localStorage.getItem('device_config');
+      if (deviceConfig) {
+        try {
+          const config = JSON.parse(deviceConfig);
+          deviceId = config.deviceId || deviceId;
+        } catch {
+          // Use default
+        }
+      }
+      
+      // Check network connection status
+      const networkSettings = localStorage.getItem('networkSettings');
+      let isConnected = false;
+      
+      if (networkSettings) {
+        try {
+          const settings = JSON.parse(networkSettings);
+          isConnected = 
+            settings.ip === '192.168.1.3' && 
+            settings.port === '8080' && 
+            settings.login === 'admin' && 
+            settings.password === 'konsmetal';
+        } catch {
+          isConnected = false;
+        }
+      }
+      
+      // Create timestamp in current moment
+      const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
+      
+      // Create new event with status based on connection
+      const newEvent = {
+        id: Date.now() + Math.random(), // Use timestamp + random as unique ID
+        date: timestamp,
+        type: eventType,
+        status: isConnected ? ('synced' as const) : ('not-sent' as const),
+        deviceId: deviceId,
+        timestamp: timestamp,
+        userId: currentUserId,
+        ...additionalData
+      };
+      
+      // Add to beginning of array
+      events.unshift(newEvent);
+      
+      // Save back to localStorage
+      localStorage.setItem(EVENTS_STORAGE_KEY, JSON.stringify(events));
+    } catch (error) {
+      console.error('Error saving event:', error);
+    }
+  };
+
   const handleKeyPress = (key: string) => {
     if (activeField === 'login') {
       setLogin(prev => prev + key);
@@ -935,6 +1071,12 @@ export default function App() {
   };
 
   const handleLogout = () => {
+    // Log logout event
+    addGenericEvent('logout', {
+      logoutUserId: currentUserId,
+      userType: userType
+    });
+    
     // Clear session deposits (but keep depositedBarcodes for Kurier)
     setSessionDeposits([]);
     
@@ -956,6 +1098,13 @@ export default function App() {
   const handleCardSubmit = (code: string) => {
     // Check if this user exists and is active
     const user = users.find(u => u.id === code && u.status === 'aktywny');
+    
+    // Log card scan event
+    addGenericEvent('scan-card', {
+      cardCode: code,
+      scanSuccess: !!user,
+      userRole: user?.role || 'unknown'
+    });
     
     if (!user) {
       // User not found or inactive - don't proceed, do nothing
@@ -1107,6 +1256,20 @@ export default function App() {
             setCurrentScreen('master-zdarzenia');
           } else if (currentScreen === 'event-details-log') {
             setCurrentScreen('master-zdarzenia');
+          } else if (currentScreen === 'event-details-user-management') {
+            setCurrentScreen('master-zdarzenia');
+          } else if (currentScreen === 'event-details-scan-card') {
+            setCurrentScreen('master-zdarzenia');
+          } else if (currentScreen === 'event-details-scan-qr') {
+            setCurrentScreen('master-zdarzenia');
+          } else if (currentScreen === 'event-details-scan-barcode') {
+            setCurrentScreen('master-zdarzenia');
+          } else if (currentScreen === 'event-details-device-open') {
+            setCurrentScreen('master-zdarzenia');
+          } else if (currentScreen === 'event-details-device-close') {
+            setCurrentScreen('master-zdarzenia');
+          } else if (currentScreen === 'event-details-logout') {
+            setCurrentScreen('master-zdarzenia');
           } else if (currentScreen === 'add-user') {
             setCurrentScreen('master-users');
           } else if (currentScreen === 'edit-user') {
@@ -1147,6 +1310,11 @@ export default function App() {
                 setBarcode('12345'); // Симуляція зчитування QR
                 // 50% chance of valid or invalid QR
                 const isValidQR = Math.random() > 0.5;
+                // Log QR scan event
+                addGenericEvent('scan-qr', {
+                  qrData: newEnvelopeNumber,
+                  scanSuccess: isValidQR
+                });
                 setCurrentScreen(isValidQR ? 'qr-scanned' : 'invalid-qr');
               }}
             />
@@ -1178,9 +1346,11 @@ export default function App() {
                   }
                   return prev;
                 });
-                addDepositEvent(envelopeNumber, true, envelopeNumber);
+                addDepositEvent(envelopeNumber, true, envelopeNumber, 'Potwierdzona');
                 setCurrentScreen('envelope-accepted');
               } else {
+                // Add event for unconfirmed deposit
+                addDepositEvent(envelopeNumber, true, envelopeNumber, 'Niepotwierdzona');
                 setCurrentScreen('envelope-not-accepted');
               }
             }} />
@@ -1207,9 +1377,11 @@ export default function App() {
                   }
                   return prev;
                 });
-                addDepositEvent(depositId, !isBarcodeFlow, depositId);
+                addDepositEvent(depositId, !isBarcodeFlow, depositId, 'Potwierdzona');
                 setCurrentScreen('envelope-accepted');
               } else {
+                // Add event for unconfirmed deposit
+                addDepositEvent(depositId, !isBarcodeFlow, depositId, 'Niepotwierdzona');
                 setCurrentScreen('envelope-not-accepted');
               }
             }} />
@@ -1271,6 +1443,11 @@ export default function App() {
                 setBarcode(code);
                 // 50% chance of valid or invalid barcode
                 const isValidBarcode = Math.random() > 0.5;
+                // Log barcode scan event
+                addGenericEvent('scan-barcode', {
+                  barcodeData: code,
+                  scanSuccess: isValidBarcode
+                });
                 setCurrentScreen(isValidBarcode ? 'barcode-scanned' : 'invalid-barcode');
               }}
             />
@@ -1312,8 +1489,9 @@ export default function App() {
                   }
                   return prev;
                 });
-                addDepositEvent(barcode, false, barcode);
               }
+              // Add event for all deposits (both confirmed and unconfirmed)
+              addDepositEvent(barcode, false, barcode, isSuccess ? 'Potwierdzona' : 'Niepotwierdzona');
               setCurrentScreen(isSuccess ? 'envelope-accepted' : 'envelope-not-accepted');
             }} />
           ) : currentScreen === 'deposit-instruction' ? (
@@ -1333,7 +1511,7 @@ export default function App() {
               hasQrData={hasScannedQr}
               addToDeposits={(code, hasQr) => {
                 setDepositedBarcodes(prev => [...prev, envelopeNumber]);
-                addDepositEvent(envelopeNumber, hasQr, envelopeNumber);
+                addDepositEvent(envelopeNumber, hasQr, envelopeNumber, 'Potwierdzona');
               }}
             />
           ) : currentScreen === 'envelope-rejected' ? (
@@ -1365,7 +1543,14 @@ export default function App() {
             />
           ) : currentScreen === 'release-latch' ? (
             <ReleaseLatchScreen 
-              onNext={() => setCurrentScreen('open-doors')}
+              onNext={() => {
+                // Log device open event
+                addGenericEvent('device-open', {
+                  action: 'unload',
+                  operation: 'release-latch'
+                });
+                setCurrentScreen('open-doors');
+              }}
             />
           ) : currentScreen === 'open-doors' ? (
             <OpenDoorsScreen 
@@ -1385,7 +1570,14 @@ export default function App() {
             />
           ) : currentScreen === 'close-latch' ? (
             <CloseLatchScreen 
-              onNext={() => setCurrentScreen('unload-completed-screen')}
+              onNext={() => {
+                // Log device close event
+                addGenericEvent('device-close', {
+                  action: 'unload',
+                  operation: 'close-latch'
+                });
+                setCurrentScreen('unload-completed-screen');
+              }}
             />
           ) : currentScreen === 'unload-completed-screen' ? (
             <UnloadCompletedScreen 
@@ -1481,6 +1673,10 @@ export default function App() {
               users={users}
               onAddUser={() => setCurrentScreen('add-user')}
               onDeleteUser={(userId) => {
+                const user = users.find(u => u.id === userId);
+                if (user) {
+                  addUserManagementEvent('delete', userId, user.role);
+                }
                 setUsers(prev => prev.filter(u => u.id !== userId));
               }}
               onEditUser={(userId) => {
@@ -1498,6 +1694,7 @@ export default function App() {
                   isFirstLogin: true
                 };
                 setUsers(prev => [...prev, newUser]);
+                addUserManagementEvent('add', userId, role);
                 setCurrentScreen('master-users');
               }}
             />
@@ -1510,6 +1707,7 @@ export default function App() {
                 setUsers(prev => prev.map(u => 
                   u.id === editingUserId ? { ...u, id: newUserId, role, status } : u
                 ));
+                addUserManagementEvent('edit', newUserId, role);
                 setEditingUserId(null);
                 setCurrentScreen('master-users');
               }}
@@ -1518,12 +1716,42 @@ export default function App() {
             <ZdarzeniaScreen 
               onDetailsClick={(eventId, eventType) => {
                 setSelectedEventId(eventId);
+                
+                // Get event data to check hasQrData
+                const EVENTS_STORAGE_KEY = 'zdarzenia_events';
+                try {
+                  const stored = localStorage.getItem(EVENTS_STORAGE_KEY);
+                  if (stored) {
+                    const events = JSON.parse(stored);
+                    const event = events.find((e: any) => e.id === eventId);
+                    if (event) {
+                      setSelectedEventHasQrData(event.hasQrData !== false);
+                    }
+                  }
+                } catch {
+                  setSelectedEventHasQrData(true);
+                }
+                
                 if (eventType === 'deposit') {
                   setCurrentScreen('event-details-deposit');
                 } else if (eventType === 'unload') {
                   setCurrentScreen('event-details-unload');
                 } else if (eventType === 'log') {
                   setCurrentScreen('event-details-log');
+                } else if (eventType === 'user-management') {
+                  setCurrentScreen('event-details-user-management');
+                } else if (eventType === 'scan-card') {
+                  setCurrentScreen('event-details-scan-card');
+                } else if (eventType === 'scan-qr') {
+                  setCurrentScreen('event-details-scan-qr');
+                } else if (eventType === 'scan-barcode') {
+                  setCurrentScreen('event-details-scan-barcode');
+                } else if (eventType === 'device-open') {
+                  setCurrentScreen('event-details-device-open');
+                } else if (eventType === 'device-close') {
+                  setCurrentScreen('event-details-device-close');
+                } else if (eventType === 'logout') {
+                  setCurrentScreen('event-details-logout');
                 }
               }}
               onSyncClick={(eventId) => {
@@ -1532,11 +1760,29 @@ export default function App() {
               }}
             />
           ) : currentScreen === 'event-details-deposit' ? (
-            <DepozytDetailsScreen eventId={selectedEventId} />
+            selectedEventHasQrData ? (
+              <DepozytDetailsScreen eventId={selectedEventId} />
+            ) : (
+              <BarcodeDepozytDetailsScreen eventId={selectedEventId} />
+            )
           ) : currentScreen === 'event-details-unload' ? (
             <UnloadDetailsScreen eventId={selectedEventId} />
           ) : currentScreen === 'event-details-log' ? (
             <LogowanieDetailsScreen eventId={selectedEventId} />
+          ) : currentScreen === 'event-details-user-management' ? (
+            <UserManagementDetailsScreen eventId={selectedEventId} />
+          ) : currentScreen === 'event-details-scan-card' ? (
+            <GenericEventDetailsScreen eventId={selectedEventId} eventType="scan-card" />
+          ) : currentScreen === 'event-details-scan-qr' ? (
+            <GenericEventDetailsScreen eventId={selectedEventId} eventType="scan-qr" />
+          ) : currentScreen === 'event-details-scan-barcode' ? (
+            <GenericEventDetailsScreen eventId={selectedEventId} eventType="scan-barcode" />
+          ) : currentScreen === 'event-details-device-open' ? (
+            <GenericEventDetailsScreen eventId={selectedEventId} eventType="device-open" />
+          ) : currentScreen === 'event-details-device-close' ? (
+            <GenericEventDetailsScreen eventId={selectedEventId} eventType="device-close" />
+          ) : currentScreen === 'event-details-logout' ? (
+            <GenericEventDetailsScreen eventId={selectedEventId} eventType="logout" />
           ) : null}
         </div>
       </div>
