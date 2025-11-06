@@ -28,7 +28,7 @@ export default function EditUserScreen({
   const roles = ['Klient', 'Kurier', 'Master'];
   const statuses: Array<{ value: 'aktywny' | 'nieaktywny'; label: string }> = [
     { value: 'aktywny', label: 'Aktywny' },
-    { value: 'nieaktywny', label: 'Nie aktywny' }
+    { value: 'nieaktywny', label: 'Nieaktywny' }
   ];
 
   // Function to generate random ID (5 digits)

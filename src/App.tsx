@@ -910,6 +910,14 @@ export default function App() {
       // Create timestamp in current moment
       const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
       
+      // Get user role from userType
+      let userRoleName = 'Kurier';
+      if (userType === 'master') {
+        userRoleName = 'Master';
+      } else if (userType === 'deposit') {
+        userRoleName = 'Klient';
+      }
+      
       // Create new event with status based on connection
       const newEvent = {
         id: Date.now(), // Use timestamp as unique ID
@@ -917,7 +925,9 @@ export default function App() {
         type: 'unload' as const,
         status: isConnected ? ('synced' as const) : ('not-sent' as const),
         deviceId: deviceId,
-        timestamp: timestamp
+        timestamp: timestamp,
+        userId: currentUserId,
+        userRole: userRoleName
       };
       
       // Add to beginning of array
@@ -1032,6 +1042,11 @@ export default function App() {
       // Create timestamp in current moment
       const timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ');
       
+      // For scan-card event, use scannedUserId if available, otherwise use currentUserId
+      const eventUserId = eventType === 'scan-card' && additionalData.scannedUserId 
+        ? additionalData.scannedUserId 
+        : currentUserId;
+      
       // Create new event with status based on connection
       const newEvent = {
         id: Date.now() + Math.random(), // Use timestamp + random as unique ID
@@ -1040,7 +1055,7 @@ export default function App() {
         status: isConnected ? ('synced' as const) : ('not-sent' as const),
         deviceId: deviceId,
         timestamp: timestamp,
-        userId: currentUserId,
+        userId: eventUserId,
         ...additionalData
       };
       
@@ -1099,11 +1114,12 @@ export default function App() {
     // Check if this user exists and is active
     const user = users.find(u => u.id === code && u.status === 'aktywny');
     
-    // Log card scan event
+    // Log card scan event with scanned user ID
     addGenericEvent('scan-card', {
       cardCode: code,
       scanSuccess: !!user,
-      userRole: user?.role || 'unknown'
+      userRole: user?.role || 'unknown',
+      scannedUserId: code
     });
     
     if (!user) {

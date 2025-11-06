@@ -151,18 +151,6 @@ export default function UnloadDetailsScreen({ onBack, eventId }: UnloadDetailsSc
                   </div>
                 </div>
               </div>
-              <div className="[grid-area:2_/_2] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
-                <div className="h-[20px] relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Rola użytkownika</p>
-                  </div>
-                </div>
-                <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
-                  <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-full relative w-[464.5px]">
-                    <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{userRole}</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

@@ -252,7 +252,7 @@ export default function UsersScreen({ users: propUsers, onAddUser, onEditUser, o
   };
 
   const getStatusLabel = (status: User['status']) => {
-    return status === 'aktywny' ? 'Aktywny' : 'Nie aktywny';
+    return status === 'aktywny' ? 'Aktywny' : 'Nieaktywny';
   };
 
   const getStatusColor = (status: User['status']) => {
