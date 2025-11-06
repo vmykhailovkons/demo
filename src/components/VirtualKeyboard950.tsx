@@ -76,12 +76,6 @@ export function VirtualKeyboard950({ onKeyPress, onBackspace }: VirtualKeyboard9
             <p className="font-['Arial:Regular',sans-serif] leading-[20px] text-[14px] text-neutral-950">{key}</p>
           </button>
         ))}
-        <button 
-          onClick={() => onKeyPress(' ')}
-          className="absolute bg-gray-100 h-[47px] left-[852px] rounded-[8px] w-[98px] hover:bg-gray-200 transition-colors cursor-pointer border border-[#d1d5dc] flex items-center justify-center"
-        >
-          <p className="font-['Arial:Regular',sans-serif] leading-[20px] text-[14px] text-neutral-950">space</p>
-        </button>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { VirtualKeyboard } from "./components/VirtualKeyboard";
 import SkanowanieQr from "./imports/SkanowanieQr";
-import SkanowanieKodKreskowy from "./imports/SkanowanieKodKreskowy";
+import SkanowanieKodKreskowyScreen from "./imports/SkanowanieKodKreskowyScreen";
 import svgPathsDeponowanie from "./imports/svg-zaa6w8fsh6";
 import svgPathsEnvelope from "./imports/svg-pgez0osv3x";
 import svgPathsBag from "./imports/svg-degqvs17j4";
@@ -28,6 +28,7 @@ import { EnvelopeRejectedScreen } from "./components/EnvelopeRejectedScreen";
 import { RetryInstructionScreen } from "./components/RetryInstructionScreen";
 import { InvalidQRScreen } from "./components/InvalidQRScreen";
 import { InvalidBarcodeScreen } from "./components/InvalidBarcodeScreen";
+import NieZeskanowanoKodKreskowy from "./imports/NieZeskanowanoKodKreskowy";
 import { EnvelopeAcceptedScreen } from "./components/EnvelopeAcceptedScreen";
 import { CompletedDepositsScreen } from "./components/CompletedDepositsScreen";
 import { OpenSlotScreen } from "./components/OpenSlotScreen";
@@ -53,8 +54,11 @@ import { ReplacePaperOpenDoorsScreen } from "./components/ReplacePaperOpenDoorsS
 import { ReplacePaperScreen } from "./components/ReplacePaperScreen";
 import { ReplacePaperCloseDoorsScreen } from "./components/ReplacePaperCloseDoorsScreen";
 import { ReplacePaperCompletedScreen } from "./components/ReplacePaperCompletedScreen";
+import DepositInstructionScreen from "./components/DepositInstructionScreen";
+import { OpenSlotInstructionScreen } from "./components/OpenSlotInstructionScreen";
+import { PlaceDepositCloseSlotScreen } from "./components/PlaceDepositCloseSlotScreen";
 
-function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBackToCard, onBackToQR }: { isLoggedIn: boolean; onLogout?: () => void; currentScreen?: 'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'invalid-qr' | 'barcode' | 'barcode-scanned' | 'invalid-barcode' | 'success' | 'deposit' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log'; onBack?: () => void; loginStep?: 'card' | 'pin' | 'setup-pin' | 'logged-in'; onBackToCard?: () => void; onBackToQR?: () => void }) {
+function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBackToCard, onBackToQR }: { isLoggedIn: boolean; onLogout?: () => void; currentScreen?: 'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'invalid-qr' | 'barcode' | 'barcode-scanned' | 'invalid-barcode' | 'success' | 'deposit' | 'deposit-instruction' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'open-slot-instruction' | 'place-deposit-close-slot'; onBack?: () => void; loginStep?: 'card' | 'pin' | 'setup-pin' | 'logged-in'; onBackToCard?: () => void; onBackToQR?: () => void }) {
   const getTitle = () => {
     if (!isLoggedIn) return 'Logowanie do systemu';
     if (currentScreen === 'master') return 'Master';
@@ -75,7 +79,7 @@ function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBack
     if (currentScreen === 'replace-bag-release-latch' || currentScreen === 'replace-bag-open-doors' || currentScreen === 'replace-bag-insert-empty' || currentScreen === 'replace-bag-close-doors' || currentScreen === 'replace-bag-close-latch' || currentScreen === 'replace-bag-completed') return 'Wymiana worka';
     if (currentScreen === 'replace-paper-open-doors' || currentScreen === 'replace-paper' || currentScreen === 'replace-paper-close-doors' || currentScreen === 'replace-paper-completed') return 'Wymiana papieru';
     if (currentScreen === 'completed-deposits') return 'Zrealizowane depozyty';
-    if (currentScreen === 'deposit' || currentScreen === 'envelope-success') return 'Deponowanie';
+    if (currentScreen === 'deposit' || currentScreen === 'envelope-success' || currentScreen === 'deposit-instruction') return 'Deponowanie';
     if (currentScreen === 'success') return 'Skanowanie kod kreskowy';
     if (currentScreen === 'barcode') return 'Skanowanie kod kreskowy';
     if (currentScreen === 'barcode-scanned') return 'Skanowanie kod kreskowy';
@@ -106,7 +110,7 @@ function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBack
               <span className="font-['Arial:Regular',sans-serif] text-[14px] text-white">Wróć</span>
             </button>
           )}
-          {(currentScreen === 'barcode' || currentScreen === 'barcode-scanned') && onBackToQR && (
+          {(currentScreen === 'barcode' || currentScreen === 'barcode-scanned' || currentScreen === 'invalid-barcode') && onBackToQR && (
             <button
               onClick={onBackToQR}
               className="bg-[rgba(255,255,255,0.1)] flex gap-2 items-center px-4 py-2 rounded-lg hover:bg-[rgba(255,255,255,0.2)] transition-colors"
@@ -189,7 +193,7 @@ function DepositContent({ onComplete }: { onComplete: () => void }) {
           </ol>
           <ol className="[white-space-collapse:collapse] absolute block font-['Arial:Regular',sans-serif] leading-[0] left-[723.5px] list-decimal not-italic text-[#2b7fff] text-[18px] text-center text-nowrap top-[75px] translate-x-[-50%]" start="3">
             <li className="list-inside ms-[27px]">
-              <span className="leading-[27px]">Zamknij wrzutnie</span>
+              <span className="leading-[27px]">Zamknij wrzutnię</span>
             </li>
           </ol>
         </div>
@@ -639,15 +643,7 @@ function SuccessContent() {
   );
 }
 
-function BarcodeContent({ onBarcodeComplete, onBarcodeChange }: { onBarcodeComplete?: () => void; onBarcodeChange?: (barcode: string) => void }) {
-  return (
-    <div className="h-[600.297px] relative w-[1024.5px]">
-      <div className="content-stretch flex h-full items-center justify-center overflow-clip relative w-full">
-        <SkanowanieKodKreskowy onBarcodeComplete={onBarcodeComplete} onBarcodeChange={onBarcodeChange} />
-      </div>
-    </div>
-  );
-}
+
 
 interface User {
   id: string;
@@ -667,13 +663,14 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userType, setUserType] = useState<'deposit' | 'unloading' | 'master'>('deposit');
   const [currentUserId, setCurrentUserId] = useState<string>('');
-  const [currentScreen, setCurrentScreen] = useState<'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'barcode' | 'barcode-scanned' | 'success' | 'deposit' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'invalid-qr' | 'invalid-barcode'>('qr');
+  const [currentScreen, setCurrentScreen] = useState<'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'barcode' | 'barcode-scanned' | 'success' | 'deposit' | 'deposit-instruction' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'invalid-qr' | 'invalid-barcode' | 'open-slot-instruction' | 'place-deposit-close-slot'>('qr');
   const [editingUserId, setEditingUserId] = useState<string | null>(null);
   const [selectedEventId, setSelectedEventId] = useState<number | null>(null);
   const [barcode, setBarcode] = useState('');
   const [hasScannedQr, setHasScannedQr] = useState(false);
   const [envelopeNumber, setEnvelopeNumber] = useState('A23909090');
   const [isRetryFlow, setIsRetryFlow] = useState(false);
+  const [isBarcodeFlow, setIsBarcodeFlow] = useState(false); // Флаг для потоку штрих-коду
   
   // Функція генерації рандомного номера конверти
   const generateEnvelopeNumber = () => {
@@ -951,6 +948,8 @@ export default function App() {
     setLoginStep('card');
     setBarcode('');
     setActiveField('login');
+    setIsBarcodeFlow(false);
+    setIsRetryFlow(false);
   };
 
   // Handle card code submission
@@ -1138,6 +1137,7 @@ export default function App() {
             <SkanowanieQr 
               onSkip={() => {
                 setHasScannedQr(false);
+                setBarcode('');
                 setCurrentScreen('barcode');
               }}
               onQrScan={() => {
@@ -1153,6 +1153,7 @@ export default function App() {
           ) : currentScreen === 'qr-scanned' ? (
             <QRDataScreen onClick={() => {
               setIsRetryFlow(false);
+              setIsBarcodeFlow(false);
               setCurrentScreen('open-slot');
             }} envelopeNumber={envelopeNumber} />
           ) : currentScreen === 'open-slot' ? (
@@ -1170,6 +1171,14 @@ export default function App() {
               if (isAccepted) {
                 // Add to session deposits as confirmed
                 setSessionDeposits(prev => [...prev, { envelopeNumber, status: 'Potwierdzone' }]);
+                // Save to depositedBarcodes for Kurier (avoid duplicates)
+                setDepositedBarcodes(prev => {
+                  if (!prev.includes(envelopeNumber)) {
+                    return [...prev, envelopeNumber];
+                  }
+                  return prev;
+                });
+                addDepositEvent(envelopeNumber, true, envelopeNumber);
                 setCurrentScreen('envelope-accepted');
               } else {
                 setCurrentScreen('envelope-not-accepted');
@@ -1179,17 +1188,26 @@ export default function App() {
             <CheckSlotScreen onClick={() => {
               // 50% chance of envelope being accepted or not accepted
               const isAccepted = Math.random() > 0.5;
+              const depositId = isBarcodeFlow ? barcode : envelopeNumber;
               if (isAccepted) {
                 // Update status to confirmed if it was previously unconfirmed
                 setSessionDeposits(prev => {
-                  const existingIndex = prev.findIndex(d => d.envelopeNumber === envelopeNumber);
+                  const existingIndex = prev.findIndex(d => d.envelopeNumber === depositId);
                   if (existingIndex >= 0) {
                     const updated = [...prev];
-                    updated[existingIndex] = { envelopeNumber, status: 'Potwierdzone' };
+                    updated[existingIndex] = { envelopeNumber: depositId, status: 'Potwierdzone' };
                     return updated;
                   }
-                  return [...prev, { envelopeNumber, status: 'Potwierdzone' }];
+                  return [...prev, { envelopeNumber: depositId, status: 'Potwierdzone' }];
                 });
+                // Save to depositedBarcodes for Kurier (avoid duplicates)
+                setDepositedBarcodes(prev => {
+                  if (!prev.includes(depositId)) {
+                    return [...prev, depositId];
+                  }
+                  return prev;
+                });
+                addDepositEvent(depositId, !isBarcodeFlow, depositId);
                 setCurrentScreen('envelope-accepted');
               } else {
                 setCurrentScreen('envelope-not-accepted');
@@ -1198,32 +1216,37 @@ export default function App() {
           ) : currentScreen === 'envelope-accepted' ? (
             <EnvelopeAcceptedScreen onClick={() => {
               setIsRetryFlow(false);
+              setIsBarcodeFlow(false);
               setCurrentScreen('completed-deposits');
             }} />
           ) : currentScreen === 'envelope-not-accepted' ? (
             <EnvelopeNotAcceptedScreen 
               onCheck={() => {
-                // Add as unconfirmed if not already in list
+                // Add as unconfirmed if not already in list - використовуємо barcode якщо це штрих-код потік
+                const depositId = isBarcodeFlow ? barcode : envelopeNumber;
                 setSessionDeposits(prev => {
-                  const exists = prev.some(d => d.envelopeNumber === envelopeNumber);
+                  const exists = prev.some(d => d.envelopeNumber === depositId);
                   if (!exists) {
-                    return [...prev, { envelopeNumber, status: 'Niepotwierdzone' }];
+                    return [...prev, { envelopeNumber: depositId, status: 'Niepotwierdzone' }];
                   }
                   return prev;
                 });
                 setIsRetryFlow(true);
-                setCurrentScreen('open-slot');
+                // Якщо це потік штрих-коду, повертаємося на open-slot-instruction
+                setCurrentScreen(isBarcodeFlow ? 'open-slot-instruction' : 'open-slot');
               }}
               onFinish={() => {
-                // Add as unconfirmed if not already in list
+                // Add as unconfirmed if not already in list - використовуємо barcode якщо це штрих-код потік
+                const depositId = isBarcodeFlow ? barcode : envelopeNumber;
                 setSessionDeposits(prev => {
-                  const exists = prev.some(d => d.envelopeNumber === envelopeNumber);
+                  const exists = prev.some(d => d.envelopeNumber === depositId);
                   if (!exists) {
-                    return [...prev, { envelopeNumber, status: 'Niepotwierdzone' }];
+                    return [...prev, { envelopeNumber: depositId, status: 'Niepotwierdzone' }];
                   }
                   return prev;
                 });
                 setIsRetryFlow(false);
+                setIsBarcodeFlow(false);
                 setCurrentScreen('completed-deposits');
               }}
             />
@@ -1236,28 +1259,63 @@ export default function App() {
               }}
               onNextDeposit={() => {
                 setIsRetryFlow(false);
+                setIsBarcodeFlow(false);
                 setCurrentScreen('qr');
               }}
             />
           ) : currentScreen === 'invalid-qr' ? (
             <InvalidQRScreen onTimeout={() => setCurrentScreen('qr')} />
           ) : currentScreen === 'barcode' ? (
-            <SkanowanieKodKreskowy 
-              onBarcodeChange={(code) => {
+            <SkanowanieKodKreskowyScreen 
+              onBarcodeComplete={(code) => {
                 setBarcode(code);
-              }}
-              onBarcodeComplete={() => {
-                // Використовуємо введений barcode як номер конверти
-                setEnvelopeNumber(barcode);
                 // 50% chance of valid or invalid barcode
                 const isValidBarcode = Math.random() > 0.5;
                 setCurrentScreen(isValidBarcode ? 'barcode-scanned' : 'invalid-barcode');
               }}
             />
           ) : currentScreen === 'barcode-scanned' ? (
-            <BarcodeScannedScreen barcode={barcode} onTimeout={() => setCurrentScreen('deposit-instruction')} />
+            <BarcodeScannedScreen barcode={barcode} onClick={() => {
+              setIsBarcodeFlow(true);
+              setCurrentScreen('open-slot-instruction');
+            }} />
           ) : currentScreen === 'invalid-barcode' ? (
-            <InvalidBarcodeScreen onTimeout={() => setCurrentScreen('barcode')} />
+            <NieZeskanowanoKodKreskowy 
+              onClick={() => {
+                setBarcode('');
+                setCurrentScreen('barcode');
+              }}
+            />
+          ) : currentScreen === 'open-slot-instruction' ? (
+            <OpenSlotInstructionScreen onNext={() => setCurrentScreen('place-deposit-close-slot')} />
+          ) : currentScreen === 'place-deposit-close-slot' ? (
+            <PlaceDepositCloseSlotScreen onNext={() => {
+              // 50% chance of success or rejection
+              const isSuccess = Math.random() > 0.5;
+              // Add to sessionDeposits with appropriate status - використовуємо barcode для штрих-коду
+              setSessionDeposits(prev => {
+                const existingIndex = prev.findIndex(d => d.envelopeNumber === barcode);
+                if (existingIndex >= 0) {
+                  // Update existing deposit status
+                  const updated = [...prev];
+                  updated[existingIndex] = { envelopeNumber: barcode, status: isSuccess ? 'Potwierdzone' : 'Niepotwierdzone' };
+                  return updated;
+                }
+                // Add new deposit
+                return [...prev, { envelopeNumber: barcode, status: isSuccess ? 'Potwierdzone' : 'Niepotwierdzone' }];
+              });
+              if (isSuccess) {
+                // Save to depositedBarcodes for Kurier (avoid duplicates)
+                setDepositedBarcodes(prev => {
+                  if (!prev.includes(barcode)) {
+                    return [...prev, barcode];
+                  }
+                  return prev;
+                });
+                addDepositEvent(barcode, false, barcode);
+              }
+              setCurrentScreen(isSuccess ? 'envelope-accepted' : 'envelope-not-accepted');
+            }} />
           ) : currentScreen === 'deposit-instruction' ? (
             <DepositInstructionScreen onTimeout={() => {
               // 50% chance of success or rejection
@@ -1275,7 +1333,6 @@ export default function App() {
               hasQrData={hasScannedQr}
               addToDeposits={(code, hasQr) => {
                 setDepositedBarcodes(prev => [...prev, envelopeNumber]);
-                setSessionDepositedBarcodes(prev => [...prev, envelopeNumber]);
                 addDepositEvent(envelopeNumber, hasQr, envelopeNumber);
               }}
             />
@@ -1347,6 +1404,7 @@ export default function App() {
               onFinish={() => {
                 // Clear all deposits after unloading
                 setDepositedBarcodes([]);
+                setUnloadedDeposits([]);
                 localStorage.removeItem('depositedBarcodes');
                 handleLogout();
               }}
@@ -1479,12 +1537,7 @@ export default function App() {
             <UnloadDetailsScreen eventId={selectedEventId} />
           ) : currentScreen === 'event-details-log' ? (
             <LogowanieDetailsScreen eventId={selectedEventId} />
-          ) : (
-            <BarcodeContent 
-              onBarcodeComplete={() => setCurrentScreen('success')}
-              onBarcodeChange={(newBarcode) => setBarcode(newBarcode)}
-            />
-          )}
+          ) : null}
         </div>
       </div>
     </div>

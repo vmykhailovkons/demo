@@ -33,18 +33,25 @@ export function UnloadingSummaryScreen({ deposits, onMenu, onFinish }: Unloading
                 </div>
                 
                 {/* Table Body */}
-                <div className="absolute h-[147px] left-0 top-[40px] w-[949px]">
-                  {deposits.slice(0, 3).map((deposit, index) => (
-                    <div key={deposit} className="absolute h-[49px] left-0 w-[949px]" style={{ top: `${index * 49}px` }}>
+                <div className="absolute h-[147px] left-0 top-[40px] w-[949px] overflow-y-auto">
+                  {deposits.length === 0 ? (
+                    <div className="h-[49px] w-[949px] flex items-center justify-center relative">
                       <div aria-hidden="true" className="absolute border-[0px_0px_1px] border-gray-200 border-solid inset-0 pointer-events-none" />
-                      <div className="absolute h-[49px] left-0 top-0 w-[200px]">
-                        <div className="absolute h-[21px] left-[12px] top-[14.25px] w-[176px]">
-                          <p className="absolute font-['Arial:Regular',sans-serif] leading-[21px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{deposit}</p>
-                        </div>
-                      </div>
-                      <p className="absolute font-['Arial:Regular',sans-serif] leading-[21px] left-[214px] not-italic text-[#101828] text-[14px] text-nowrap top-[14px] whitespace-pre">Potwierdzone</p>
+                      <p className="font-['Arial:Regular',sans-serif] leading-[21px] not-italic text-[#6b7280] text-[14px]">Brak depozytów</p>
                     </div>
-                  ))}
+                  ) : (
+                    deposits.map((deposit, index) => (
+                      <div key={deposit + index} className="absolute h-[49px] left-0 w-[949px]" style={{ top: `${index * 49}px` }}>
+                        <div aria-hidden="true" className="absolute border-[0px_0px_1px] border-gray-200 border-solid inset-0 pointer-events-none" />
+                        <div className="absolute h-[49px] left-0 top-0 w-[200px]">
+                          <div className="absolute h-[21px] left-[12px] top-[14.25px] w-[176px]">
+                            <p className="absolute font-['Arial:Regular',sans-serif] leading-[21px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{deposit}</p>
+                          </div>
+                        </div>
+                        <p className="absolute font-['Arial:Regular',sans-serif] leading-[21px] left-[214px] not-italic text-[#101828] text-[14px] text-nowrap top-[14px] whitespace-pre">Potwierdzone</p>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>

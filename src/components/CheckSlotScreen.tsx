@@ -22,15 +22,15 @@ export function CheckSlotScreen({ onClick }: CheckSlotScreenProps) {
               <div className="size-full">
                 <div className="box-border content-stretch flex flex-col h-[355px] items-start pb-[4px] pt-[36px] px-[36px] relative w-full">
                   <div className="absolute font-['Arial:Regular',sans-serif] h-[57px] leading-[27px] left-[447px] not-italic text-[#2b7fff] text-[96px] text-center top-[58px] translate-x-[-50%] w-[894px]">
-                    <p className="mb-0">Sprawdż zawartość</p>
+                    <p className="mb-0">Sprawdź zawartość</p>
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
-                    <p className="mb-0">wrzutnie i zamknij</p>
+                    <p className="mb-0">wrzutni i zamknij</p>
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
-                    <p>wrzutnie</p>
+                    <p>wrzutnię</p>
                   </div>
                 </div>
               </div>

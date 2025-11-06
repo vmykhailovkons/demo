@@ -167,7 +167,7 @@ export default function DepozytDetailsScreen({ onBack, eventId }: DepozytDetails
               </div>
               <div className="[grid-area:1_/_2] content-stretch flex flex-col gap-[4px] items-start relative shrink-0">
                 <div className="h-[20px] relative shrink-0 w-[464.5px]">
-                  <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Kod likalizacji klienta</p>
+                  <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Kod lokalizacji klienta</p>
                 </div>
                 <div className="basis-0 grow min-h-px min-w-px relative shrink-0 w-[464.5px]">
                   <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#101828] text-[14px] text-nowrap top-0 whitespace-pre">{hasQrData ? 'K43438998' : ''}</p>

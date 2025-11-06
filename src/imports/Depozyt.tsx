@@ -234,7 +234,7 @@ function Paragraph7() {
   return (
     <div className="h-[20px] relative shrink-0 w-[464.5px]" data-name="Paragraph">
       <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-        <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Numer bezpiecznej koperty/opakowanie pakietu</p>
+        <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Kod lokalizacji klienta</p>
       </div>
     </div>
   );
@@ -303,7 +303,7 @@ function Paragraph11() {
   return (
     <div className="h-[20px] relative shrink-0 w-[464.5px]" data-name="Paragraph">
       <div className="bg-clip-padding border-0 border-[transparent] border-solid box-border h-[20px] relative w-[464.5px]">
-        <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Kod likalizacji klienta</p>
+        <p className="absolute font-['Arial:Regular',sans-serif] leading-[20px] left-0 not-italic text-[#4a5565] text-[14px] text-nowrap top-0 whitespace-pre">Kod lokalizacji klienta</p>
       </div>
     </div>
   );

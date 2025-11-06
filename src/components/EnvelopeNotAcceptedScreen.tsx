@@ -34,12 +34,12 @@ export function EnvelopeNotAcceptedScreen({ onCheck, onFinish }: EnvelopeNotAcce
             
             {/* Buttons */}
             <div className="flex gap-[16px] w-full">
-              {/* Sprawdż Button */}
+              {/* Sprawdź Button */}
               <button
                 onClick={onCheck}
                 className="bg-[#155dfc] box-border content-stretch flex gap-[8px] h-[44px] items-center justify-center pl-0 pr-[0.016px] py-0 rounded-[8px] flex-1 hover:bg-[#1450e0] transition-colors"
               >
-                <p className="font-['Arial:Regular',sans-serif] leading-[21px] not-italic text-[14px] text-nowrap text-white whitespace-pre">Sprawdż</p>
+                <p className="font-['Arial:Regular',sans-serif] leading-[21px] not-italic text-[14px] text-nowrap text-white whitespace-pre">Sprawdź</p>
               </button>
               
               {/* Zakończ Button */}

@@ -27,7 +27,7 @@ export function PlaceDepositScreen({ onClick }: PlaceDepositScreenProps) {
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
                     <p className="mb-0">&nbsp;</p>
-                    <p>zamknij wrzutnie</p>
+                    <p>zamknij wrzutnię</p>
                   </div>
                 </div>
               </div>

@@ -23,12 +23,12 @@ function Container() {
             <span className="leading-[27px]">{`Wlóż kopertę powtornie i `}</span>
           </li>
         </ol>
-        <p className="leading-[27px] whitespace-pre">zamkni wrzutnie</p>
+        <p className="leading-[27px] whitespace-pre">zamknij wrzutnię</p>
       </div>
       <p className="absolute font-['Arial:Regular',sans-serif] leading-[27px] left-[578.5px] not-italic text-[#2b7fff] text-[18px] text-center text-nowrap top-[183px] translate-x-[-50%] whitespace-pre">lub</p>
       <div className="absolute font-['Arial:Regular',sans-serif] leading-[27px] left-[723px] not-italic text-[#2b7fff] text-[18px] text-center text-nowrap top-[62px] translate-x-[-50%] whitespace-pre">
         <p className="mb-0">W przypadku braku koperty</p>
-        <p>{` zamkni wrzutnię`}</p>
+        <p>{` zamknij wrzutnię`}</p>
       </div>
     </div>
   );
@@ -52,12 +52,12 @@ function Container1() {
             <span className="leading-[27px]">{`Wlóż kopertę powtornie i `}</span>
           </li>
         </ol>
-        <p className="leading-[27px] whitespace-pre">zamkni wrzutnie</p>
+        <p className="leading-[27px] whitespace-pre">zamknij wrzutnię</p>
       </div>
       <p className="absolute font-['Arial:Regular',sans-serif] leading-[27px] left-[578.5px] not-italic text-[#2b7fff] text-[18px] text-center text-nowrap top-[183px] translate-x-[-50%] whitespace-pre">lub</p>
       <div className="absolute font-['Arial:Regular',sans-serif] leading-[27px] left-[723px] not-italic text-[#2b7fff] text-[18px] text-center text-nowrap top-[62px] translate-x-[-50%] whitespace-pre">
         <p className="mb-0">W przypadku braku koperty</p>
-        <p>{` zamkni wrzutnię`}</p>
+        <p>{` zamknij wrzutnię`}</p>
       </div>
     </div>
   );
@@ -144,12 +144,12 @@ function Container2() {
             <span className="leading-[27px]">{`Wlóż kopertę powtornie i `}</span>
           </li>
         </ol>
-        <p className="leading-[27px] whitespace-pre">zamkni wrzutnie</p>
+        <p className="leading-[27px] whitespace-pre">zamknij wrzutnię</p>
       </div>
       <p className="absolute font-['Arial:Regular',sans-serif] leading-[27px] left-[578.5px] not-italic text-[#2b7fff] text-[18px] text-center text-nowrap top-[183px] translate-x-[-50%] whitespace-pre">lub</p>
       <div className="absolute font-['Arial:Regular',sans-serif] leading-[27px] left-[723px] not-italic text-[#2b7fff] text-[18px] text-center text-nowrap top-[62px] translate-x-[-50%] whitespace-pre">
         <p className="mb-0">W przypadku braku koperty</p>
-        <p>{` zamkni wrzutnię`}</p>
+        <p>{` zamknij wrzutnię`}</p>
       </div>
     </div>
   );
