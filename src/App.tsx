@@ -60,7 +60,6 @@ import { ReplacePaperCompletedScreen } from "./components/ReplacePaperCompletedS
 import DepositInstructionScreen from "./components/DepositInstructionScreen";
 import { OpenSlotInstructionScreen } from "./components/OpenSlotInstructionScreen";
 import { PlaceDepositCloseSlotScreen } from "./components/PlaceDepositCloseSlotScreen";
-import { Analytics } from '@vercel/analytics/react';
 
 
 function Navbar({ isLoggedIn, onLogout, currentScreen, onBack, loginStep, onBackToCard, onBackToQR }: { isLoggedIn: boolean; onLogout?: () => void; currentScreen?: 'qr' | 'qr-scanned' | 'open-slot' | 'check-slot' | 'place-deposit' | 'envelope-accepted' | 'envelope-not-accepted' | 'invalid-qr' | 'barcode' | 'barcode-scanned' | 'invalid-barcode' | 'success' | 'deposit' | 'deposit-instruction' | 'envelope-success' | 'envelope-rejected' | 'retry-instruction' | 'completed-deposits' | 'kurier-main' | 'release-latch' | 'open-doors' | 'pull-out-bag' | 'insert-empty-bag' | 'close-door' | 'close-latch' | 'unload-completed-screen' | 'unloading-summary' | 'unloading-completed' | 'replace-bag-release-latch' | 'replace-bag-open-doors' | 'replace-bag-insert-empty' | 'replace-bag-close-doors' | 'replace-bag-close-latch' | 'replace-bag-completed' | 'replace-paper-open-doors' | 'replace-paper' | 'replace-paper-close-doors' | 'replace-paper-completed' | 'master' | 'master-config' | 'master-ogolne' | 'master-kontrola' | 'master-users' | 'add-user' | 'edit-user' | 'master-network' | 'master-zdarzenia' | 'event-details-deposit' | 'event-details-unload' | 'event-details-log' | 'event-details-user-management' | 'event-details-scan-card' | 'event-details-scan-qr' | 'event-details-scan-barcode' | 'event-details-device-open' | 'event-details-device-close' | 'event-details-logout' | 'open-slot-instruction' | 'place-deposit-close-slot'; onBack?: () => void; loginStep?: 'card' | 'pin' | 'setup-pin' | 'logged-in'; onBackToCard?: () => void; onBackToQR?: () => void }) {
@@ -1804,7 +1803,7 @@ export default function App() {
           ) : null}
         </div>
       </div>
-      <Analytics />
+
     </div>
   );
 }
